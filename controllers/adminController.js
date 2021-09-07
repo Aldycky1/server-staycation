@@ -13,8 +13,16 @@ module.exports = {
 
   addCategory: async (req, res) => {
     const { name } = req.body;
-    // console.log(name);
+    console.log(name);
     await Category.create({ name });
+    res.redirect("/admin/category");
+  },
+
+  editCategory: async (req, res) => {
+    const { id, name } = req.body;
+    const category = await Category.findOne({ _id: id });
+    category.name = name;
+    await category.save();
     res.redirect("/admin/category");
   },
 
