@@ -616,6 +616,7 @@ module.exports = {
         .populate("bankId");
       console.log(booking);
       res.render("admin/booking/view_booking", {
+        booking,
         title: "Staycation | Booking",
         user: req.session.user,
         page_name: "booking",
