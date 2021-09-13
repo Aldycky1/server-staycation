@@ -15,11 +15,14 @@ module.exports = {
       const alertMessage = req.flash("alertMessage");
       const alertStatus = req.flash("alertStatus");
       const alert = { message: alertMessage, status: alertStatus };
-      res.render("index", {
-        alert,
-        title: "Staycation | Login",
-        page_name: "dashboard",
-      });
+      if (req.session.user == null || req.session.user == undefined) {
+        res.render("index", {
+          alert,
+          title: "Staycation | Login",
+        });
+      } else {
+        res.redirect("/admin/dashboard");
+      }
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
       req.flash("alertStatus", "danger");
@@ -48,6 +51,10 @@ module.exports = {
         req.flash("alertStatus", "danger");
         res.redirect("/admin/signin");
       }
+      req.session.user = {
+        id: user.id,
+        username: user.username,
+      };
 
       res.redirect("/admin/dashboard");
     } catch (error) {
@@ -55,11 +62,19 @@ module.exports = {
     }
   },
 
+  actionLogout: (req, res) => {
+    req.session.destroy();
+    res.redirect("/admin/signin");
+  },
+
   viewDashboard: (req, res) => {
-    res.render("admin/dashboard/view_dashboard", {
-      title: "Staycation | Dashboard",
-      page_name: "dashboard",
-    });
+    try {
+      res.render("admin/dashboard/view_dashboard", {
+        title: "Staycation | Dashboard",
+        user: req.session.user,
+        page_name: "dashboard",
+      });
+    } catch (error) {}
   },
 
   viewCategory: async (req, res) => {
@@ -72,6 +87,7 @@ module.exports = {
         category,
         alert,
         title: "Staycation | Category",
+        user: req.session.user,
         page_name: "category",
       });
     } catch (error) {
@@ -135,6 +151,7 @@ module.exports = {
       res.render("admin/bank/view_bank", {
         bank,
         title: "Staycation | Bank",
+        user: req.session.user,
         alert,
         page_name: "bank",
       });
@@ -227,6 +244,7 @@ module.exports = {
       const alert = { message: alertMessage, status: alertStatus };
       res.render("admin/item/view_item", {
         title: "Staycation | Item",
+        user: req.session.user,
         category,
         alert,
         item,
@@ -285,6 +303,7 @@ module.exports = {
       const alert = { message: alertMessage, status: alertStatus };
       res.render("admin/item/view_item", {
         title: "Staycation | Show Image Item",
+        user: req.session.user,
         alert,
         item,
         action: "show image",
@@ -312,6 +331,7 @@ module.exports = {
       const alert = { message: alertMessage, status: alertStatus };
       res.render("admin/item/view_item", {
         title: "Staycation | Edit Item",
+        user: req.session.user,
         alert,
         item,
         category,
@@ -413,6 +433,7 @@ module.exports = {
       const activity = await Activity.find({ itemId: itemId });
       res.render("admin/item/detail_item/view_detail_item", {
         title: "Staycation | Detail Item",
+        user: req.session.user,
         alert,
         itemId,
         feature,
@@ -589,6 +610,7 @@ module.exports = {
   viewBooking: (req, res) => {
     res.render("admin/booking/view_booking", {
       title: "Staycation | Booking",
+      user: req.session.user,
       page_name: "booking",
     });
   },
