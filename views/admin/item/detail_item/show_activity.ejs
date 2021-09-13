@@ -67,7 +67,7 @@
                 <tr>
                   <td><%= i + 1 %></td>
                   <td><%= activity[i].name %></td>
-                  <td><%= activity[i].qty %></td>
+                  <td><%= activity[i].type %></td>
                   <td>
                     <img
                       src="http://localhost:3000/<%= activity[i].imageUrl %>"
@@ -86,7 +86,7 @@
                         class="btn btn-warning btn-circle btn-sm button-update"
                         data-id="<%= activity[i].id %>"
                         data-name="<%= activity[i].name %>"
-                        data-qty="<%= activity[i].qty %>"
+                        data-type="<%= activity[i].type %>"
                         ><i class="fas fa-edit"></i
                       ></a>
                       <button
