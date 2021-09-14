@@ -642,4 +642,18 @@ module.exports = {
       console.log(error);
     }
   },
+
+  actionConfirmation: async (req, res) => {
+    const { id } = req.params;
+    try {
+      const booking = await Booking.findOne({ _id: id });
+      booking.payment.status = "Accept";
+      await booking.save();
+      req.flash("alertMessage", "Success Confirmation Payment");
+      req.flash("alertStatus", "success");
+      res.redirect(`/admin/booking/${id}`);
+    } catch (error) {
+      res.redirect(`/admin/booking/${id}`);
+    }
+  },
 };
