@@ -1,9 +1,35 @@
 <!-- DataTales Example -->
 <div class="card shadow mb-4 mt-2">
+  <div class="card-header py-3">
+    <a href="/admin/booking" class="btn btn-warning">Back</a>
+  </div>
   <div class="card-body">
     <div class="row">
-      <div class="col-md-5"></div>
-      <div class="col-md-7">
+      <div class="col-md-4">
+        <img
+          src="http://localhost:3000/<%= booking.payments.proofPayment %>"
+          alt="image"
+          style="width: 100%; display: block"
+        />
+        <div class="row mt-3">
+          <div class="col-md-12 d-flex justify-content-center">
+            <form action="/admin/booking" method="POST" class="d-inline-block">
+              <button type="submit" class="btn btn-success btn-sm">
+                <i class="fas fa-check"></i>
+                Confirmation
+              </button>
+            </form>
+            <div style="width: 20px"></div>
+            <form action="/admin/booking" method="POST" class="d-inline-block">
+              <button type="submit" class="btn btn-danger btn-sm">
+                <i class="fas fa-times"></i>
+                Reject
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8">
         <div class="table-responsive">
           <table
             class="table table-bordered"
@@ -13,13 +39,23 @@
           >
             <thead>
               <tr>
-                <th>No</th>
-                <th>Name</th>
-                <th>Type</th>
-                <th>Image URL</th>
-                <th>Action</th>
+                <th>Name Member</th>
+                <th>Total</th>
+                <th>Bank From</th>
+                <th>Title</th>
               </tr>
             </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <%= booking.memberId.firstName %> <%=
+                  booking.memberId.lastName %>
+                </td>
+                <td>$ <%= booking.total %></td>
+                <td><%= booking.payments.bankFrom %></td>
+                <td><%= booking.itemId.title %></td>
+              </tr>
+            </tbody>
           </table>
         </div>
       </div>
