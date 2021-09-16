@@ -126,8 +126,6 @@ module.exports = {
       return res.status(400).json({ message: "Image not found" });
     }
 
-    console.log(idItem);
-
     if (
       idItem === undefined ||
       duration === undefined ||
