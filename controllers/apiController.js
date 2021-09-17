@@ -15,7 +15,6 @@ module.exports = {
         .populate({
           path: "imageId",
           select: "_id imageUrl",
-          perDocumentLimit: 1,
         });
 
       const category = await Category.find()
